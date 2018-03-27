@@ -56,13 +56,7 @@ int main(){
   QuerSair = AbreArquivo2(&fp2);
   if(QuerSair) return 0;
   leituraBlocos = LeituraBlocos();
-  if(leituraBlocos){
-    do{
-      printf("Escreva o número de bytes por bloco (0-99)\n>>");
-      scanf("%d", &Tamanho);
-      while ((c = getchar()) != '\n' && c != EOF) { }
-    }while(Tamanho < 1 || Tamanho > 99 );
-  }
+  if(leituraBlocos) Tamanho = lSize2 - 1;
   /*trecho retirado do site: http://www.cplusplus.com/reference/cstdio/fread/*/
   fseek (fp1 , 0 , SEEK_END);
   lSize1 = ftell (fp1);
@@ -71,12 +65,13 @@ int main(){
   fseek (fp2 , 0 , SEEK_END);
   lSize2 = ftell (fp2);
   rewind (fp2);
-  fread(LeituraArquivo2,Tamanho,lSize2,fp2);
-  fwrite(LeituraArquivo2,Tamanho,lSize2,fp1);
+  fread(LeituraArquivo2, Tamanho, lSize2, fp2);
+  i=lSize2/Tamanho;
+  fwrite(LeituraArquivo2, Tamanho, i, fp1);
   for(i = 0; LeituraArquivo1[i] != '\0'; i++) printf("%c",LeituraArquivo1[i]);
   for(i = 0; LeituraArquivo2[i] != '\0'; i++) printf("%c",LeituraArquivo2[i]);
   printf("\n");
   fclose(fp1);
   fclose(fp2);
-  return 0;
+return 0;
 }
